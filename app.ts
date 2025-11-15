@@ -4,6 +4,7 @@ import { BlobServiceClient } from "@azure/storage-blob";
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
+import OpenAI from "openai";
 // routes imported here
 import exampleRouter from "./routes/exampleRoute";
 
@@ -23,13 +24,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Cosmos setup
+// Setup
 const COSMOS_ENDPOINT = process.env.COSMOS_ENDPOINT;
 const COSMOS_KEY = process.env.COSMOS_KEY;
 const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING;
 const BLOB_URL = process.env.BLOB_URL;
+const AI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT;
+const AI_KEY = process.env.AZURE_OPENAI_KEY;
+const DEPLOYMENT_NAME = process.env.AZURE_OPENAI_DEPLOYMENT;
 
-if (!COSMOS_ENDPOINT || !COSMOS_KEY || !BLOB_CONNECTION_STRING) {
+if (!COSMOS_ENDPOINT || !COSMOS_KEY || !BLOB_CONNECTION_STRING || !DEPLOYMENT_NAME) {
   console.warn("Missing Azure env vars; Cosmos/Blob clients not initialized.");
 }
 
@@ -39,6 +43,12 @@ export const cosmosClient = new CosmosClient({
 });
 
 export const blobServiceClient = new BlobServiceClient(BLOB_URL);
+
+export const openaiClient = new OpenAI({
+    apiKey: AI_KEY,
+    baseURL: `${AI_ENDPOINT}openai/deployments/${DEPLOYMENT_NAME}`,
+    defaultQuery: { "api-version": "2024-06-01" },
+});
 
 const uploadDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });

@@ -92,3 +92,15 @@ export async function deleteItem(
     throw error;
   }
 }
+
+//Generic update
+export async function updateItem(id: string, partitionKey: string, databaseName: string, containerName: string) {
+  try {
+    const container = getContainer(databaseName, containerName);
+    await container.item(id, partitionKey).delete();
+    return { id };
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    throw error;
+  }
+}

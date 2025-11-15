@@ -1,0 +1,28 @@
+{
+  "name": "technica-azure-workshop-template-files",
+  "version": "1.0.0",
+  "description": "Template files from Hack4Impact's Azure workshop.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishnanthol/technica-azure-workshop-template-files.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krishnanthol/technica-azure-workshop-template-files/issues"
+  },
+  "homepage": "https://github.com/krishnanthol/technica-azure-workshop-template-files#readme",
+  "dependencies": {
+    "@azure/cosmos": "^4.7.0",
+    "@azure/storage-blob": "^12.29.1",
+    "express": "^5.1.0",
+    "openai": "^6.9.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5"
+  }
+}
